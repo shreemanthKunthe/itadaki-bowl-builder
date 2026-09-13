@@ -5,30 +5,33 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-cream: var(--cream);
+  --color-paper: var(--paper);
+  --color-cream: var(--paper);
   --color-ink: var(--ink);
   --color-red: var(--red);
-  --color-red-deep: var(--red-deep);
-  --color-paper: var(--paper);
+  --color-white: var(--white);
+  --color-dark-gray: var(--dark-gray);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
+  --color-border-dark: var(--border-dark);
   --color-primary: var(--red);
-  --color-primary-foreground: var(--cream);
+  --color-primary-foreground: var(--paper);
   --font-display: "Anton", "Archivo Black", system-ui, sans-serif;
   --font-sans: "Inter", system-ui, sans-serif;
   --font-jp: "Noto Sans JP", system-ui, sans-serif;
 }
 
 :root {
-  --cream: oklch(0.962 0.021 89.5);
-  --paper: oklch(1 0 0);
-  --ink: oklch(0.17 0 0);
-  --red: oklch(0.567 0.223 27.6);
-  --red-deep: oklch(0.43 0.18 27.6);
-  --background: var(--cream);
+  --red: #E9252F;
+  --ink: #090909;
+  --paper: #E9E9E6;
+  --white: #FFFFFF;
+  --dark-gray: #1A1A1A;
+  --background: var(--paper);
   --foreground: var(--ink);
-  --muted-foreground: oklch(0.45 0.01 60);
-  --border: oklch(0.85 0.015 80);
+  --muted-foreground: #5C5C59;
+  --border: rgba(9, 9, 9, 0.12);
+  --border-dark: rgba(233, 233, 230, 0.15);
 }
 
 @layer base {
@@ -38,6 +41,8 @@
 
   html {
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--paper);
   }
 
   body {
@@ -49,88 +54,187 @@
 
   ::selection {
     background: var(--red);
-    color: var(--cream);
+    color: var(--white);
   }
 }
 
-@utility display {
+/* ==================================================
+   TYPOGRAPHY SYSTEM
+   Strict two-tier display hierarchy + quiet body/metadata
+   ================================================== */
+
+/* DISPLAY 01 — PRIMARY HEADLINE (Major statements: Hero, Black Section, Final CTA) */
+@utility display-1 {
   font-family: var(--font-display);
   font-weight: 400;
   line-height: 0.82;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+}
+
+/* DISPLAY 02 — SECONDARY HEADLINE (Section headlines: Top Picks, Story, Menu, Location) */
+@utility display-2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+}
+
+/* Generic legacy display utility (for safety) */
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 0.85;
   letter-spacing: -0.02em;
   text-transform: uppercase;
 }
 
-/* Oversized geometric wordmark treatment: angular skew + tight tracking */
+/* Angular ITADAKI brand wordmark treatment */
 @utility wordmark {
   font-family: var(--font-display);
   text-transform: uppercase;
   line-height: 0.75;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.04em;
   transform: skewX(-7deg);
   display: inline-block;
+}
+
+/* LABEL / METADATA: 9-12px, high letter-spacing, restrained weight */
+@utility meta-label {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
 }
 
 @utility label {
   font-family: var(--font-sans);
   font-weight: 600;
   font-size: 0.6875rem;
+  line-height: 1;
   letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
-@utility rule-red {
-  border-top: 2px solid var(--red);
+/* Quiet editorial body copy */
+@utility body-editorial {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
 }
+
+/* Clean price tag */
+@utility price-tag {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.05em;
+}
+
+/* ==================================================
+   EDITORIAL RULES & LINES
+   ================================================== */
+
+@utility rule-red {
+  border-top: 1.5px solid var(--red);
+}
+
+@utility rule-ink {
+  border-top: 1px solid rgba(9, 9, 9, 0.14);
+}
+
+@utility rule-paper {
+  border-top: 1px solid rgba(233, 233, 230, 0.16);
+}
+
+/* ==================================================
+   BUTTONS (Restrained, disciplined, no pill-shaped generic styles)
+   ================================================== */
 
 @utility btn-red {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
+  justify-content: center;
+  gap: 0.625rem;
   background: var(--red);
-  color: var(--cream);
+  color: var(--white);
   font-family: var(--font-sans);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 0.75rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  padding: 1.05rem 1.9rem;
+  padding: 0.95rem 1.75rem;
   transition:
-    background 0.25s ease,
-    transform 0.25s ease;
+    background 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   &:hover {
     background: var(--ink);
-    transform: translateY(-2px);
+    color: var(--paper);
+    transform: translateY(-1px);
   }
 }
 
 @utility btn-outline {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  border: 2px solid var(--ink);
+  justify-content: center;
+  gap: 0.625rem;
+  border: 1.5px solid var(--ink);
   color: var(--ink);
+  background: transparent;
   font-family: var(--font-sans);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 0.75rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  padding: 1rem 1.85rem;
+  padding: 0.9rem 1.7rem;
   transition:
-    background 0.25s ease,
-    color 0.25s ease;
+    background 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   &:hover {
     background: var(--ink);
-    color: var(--cream);
+    color: var(--paper);
+    transform: translateY(-1px);
+  }
+}
+
+@utility btn-outline-white {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  border: 1.5px solid var(--paper);
+  color: var(--paper);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.9rem 1.7rem;
+  transition:
+    background 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  &:hover {
+    background: var(--paper);
+    color: var(--ink);
+    transform: translateY(-1px);
   }
 }
 
 @utility img-hover {
   overflow: hidden;
   & img {
-    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   }
   &:hover img {
-    transform: scale(1.05);
+    transform: scale(1.035);
   }
 }
+

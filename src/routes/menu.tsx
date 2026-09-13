@@ -21,28 +21,37 @@ export const Route = createFileRoute("/menu")({
 
 function MenuPage() {
   return (
-    <main className="pt-24 md:pt-28">
-      <div className="px-5 md:px-8">
+    <main className="bg-paper pt-28 md:pt-36">
+      <div className="mx-auto max-w-7xl px-6 md:px-12">
         <Reveal>
-          <p className="font-jp label text-red">おしながき</p>
-          <h1 className="display mt-3 text-[17vw] leading-[0.8] text-ink md:text-[9vw]">
+          <p className="font-jp meta-label text-red">おしながき · THE COMPLETE MENU</p>
+          <h1 className="display-1 mt-4 text-5xl text-ink md:text-7xl lg:text-8xl">
             Everything
             <br />
             we make.
           </h1>
+          <p className="body-editorial mt-4 max-w-md">
+            Handcrafted broths, wheat noodles, and Tokyo street snacks. Made with patience, served with attitude.
+          </p>
         </Reveal>
       </div>
       <MenuList heading="Ramen first." />
-      <section className="bg-ink px-5 py-20 md:px-8 md:py-28">
-        <p className="display text-[10vw] leading-[0.85] text-cream md:text-[4vw]">
-          Hungry now?
-        </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <Link to="/" hash="find" className="btn-red">
-            Book a table
-          </Link>
+      <section className="bg-ink px-6 py-20 text-paper md:px-12 md:py-28">
+        <div className="mx-auto max-w-7xl flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="meta-label text-red">COUNTER SEATS AVAILABLE</p>
+            <p className="display-1 mt-2 text-4xl text-paper md:text-6xl">
+              Hungry now?
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            <Link to="/" hash="find" className="btn-red">
+              Book a table
+            </Link>
+          </div>
         </div>
       </section>
     </main>
   );
 }
+

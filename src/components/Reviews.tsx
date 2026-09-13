@@ -1,37 +1,44 @@
 import { Reveal } from "@/components/Reveal";
 
-const REVIEWS = [
-  { quote: "I came for one bowl. I stayed for two.", by: "Aditi R." },
-  { quote: "The broth tastes like somebody actually cared.", by: "Kabir M." },
-  { quote: "Loud, warm, and open late. My kind of place.", by: "Sneha T." },
-];
-
 export function Reviews() {
   return (
-    <section id="reviews" className="bg-red px-5 py-24 md:px-8 md:py-32">
-      <Reveal>
-        <p className="label text-cream/70">Overheard at the counter</p>
-      </Reveal>
-      <div className="mt-10 grid grid-cols-12 gap-y-12">
-        {REVIEWS.map((r, i) => (
-          <Reveal
-            key={r.by}
-            delay={i * 90}
-            className={
-              i === 1
-                ? "col-span-12 md:col-span-5 md:col-start-7 md:pt-16"
-                : i === 2
-                  ? "col-span-12 md:col-span-4 md:col-start-3"
-                  : "col-span-12 md:col-span-6"
-            }
-          >
-            <blockquote className="display text-[9vw] leading-[0.9] text-cream md:text-[3vw]">
-              “{r.quote}”
+    <section id="reviews" className="relative bg-red px-6 py-28 text-white md:px-12 md:py-44">
+      <div className="mx-auto max-w-7xl">
+        {/* Poster Top Bar */}
+        <Reveal>
+          <div className="flex items-center justify-between border-b border-white/25 pb-4">
+            <span className="meta-label text-white/80">06 / POSTER INTERRUPTION</span>
+            <span className="font-jp meta-label text-white/80">一杯の温もり · A HUG FROM JAPAN</span>
+          </div>
+        </Reveal>
+
+        {/* Poster Statement: Minimal, breathable, high impact */}
+        <div className="my-16 md:my-28">
+          <Reveal delay={80}>
+            <p className="meta-label text-black/80 font-bold">OVERHEARD AT THE COUNTER</p>
+            <blockquote className="display-1 mt-6 max-w-4xl text-5xl leading-[0.84] text-white md:text-7xl lg:text-8xl">
+              “The broth tastes like somebody actually cared.”
             </blockquote>
-            <cite className="label mt-3 block not-italic text-cream/70">{r.by}</cite>
           </Reveal>
-        ))}
+        </div>
+
+        {/* Poster Footer Metadata */}
+        <Reveal delay={140}>
+          <div className="grid grid-cols-12 items-end gap-6 border-t border-white/25 pt-6">
+            <div className="col-span-12 md:col-span-6">
+              <cite className="meta-label not-italic text-white">
+                Kabir M. · Regular, Indiranagar Counter
+              </cite>
+            </div>
+            <div className="col-span-12 md:col-span-6 md:text-right">
+              <span className="meta-label text-black/90 font-bold">
+                ITADAKI RAMEN SHOP · BENGALURU
+              </span>
+            </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
 }
+

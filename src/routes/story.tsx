@@ -23,15 +23,19 @@ export const Route = createFileRoute("/story")({
 
 function StoryPage() {
   return (
-    <main className="pt-24 md:pt-28">
-      <div className="px-5 md:px-8">
+    <main className="bg-paper pt-28 md:pt-36">
+      <div className="mx-auto max-w-7xl px-6 md:px-12">
         <Reveal>
-          <p className="label text-red">Comfort, with attitude</p>
-          <h1 className="display mt-3 text-[17vw] leading-[0.8] text-ink md:text-[9vw]">
+          <p className="meta-label text-red">COMFORT, WITH ATTITUDE · OUR ORIGIN</p>
+          <h1 className="display-1 mt-4 text-5xl text-ink md:text-7xl lg:text-8xl">
             Born in India.
             <br />
             Raised on <span className="text-red">ramen.</span>
           </h1>
+          <p className="body-editorial mt-4 max-w-lg">
+            We didn't want to build an untouchable temple of cuisine. We wanted to bring the warmth,
+            slurp, and vitality of Tokyo back-alleys to the streets of Bengaluru.
+          </p>
         </Reveal>
       </div>
       <StorySection />
@@ -40,3 +44,4 @@ function StoryPage() {
     </main>
   );
 }
+

@@ -7,14 +7,6 @@ import bowlNoodles from "@/assets/bowl-03-noodles.png";
 import bowlToppings from "@/assets/bowl-04-toppings.png";
 import bowlComplete from "@/assets/bowl-05-complete.png";
 
-const STEPS = [
-  { id: "empty", index: "00", name: "Empty", note: "Nothing yet. Everything soon." },
-  { id: "broth", index: "01", name: "Broth", note: "Rich. Deep. Warm." },
-  { id: "noodles", index: "02", name: "Noodles", note: "The foundation." },
-  { id: "toppings", index: "03", name: "Toppings", note: "Chicken, mushroom, spring onion." },
-  { id: "complete", index: "04", name: "Complete", note: "Egg, nori, done." },
-];
-
 const LAYERS = [bowlEmpty, bowlBroth, bowlNoodles, bowlToppings, bowlComplete];
 
 export function HeroBuild() {
@@ -40,50 +32,87 @@ export function HeroBuild() {
             trigger: root.current,
             start: "top top",
             end: "bottom bottom",
-            scrub: 0.8,
+            scrub: 0.6,
             pin: pin.current,
             pinSpacing: false,
             anticipatePin: 1,
           },
         });
 
-        // bowl content builds up, layer by layer
-        for (let i = 1; i < LAYERS.length; i += 1) {
-          tl.fromTo(
-            `[data-layer="${i}"]`,
-            { opacity: 0, scale: 0.94 },
-            { opacity: 1, scale: 1, duration: 1 },
-            i - 1,
-          );
-        }
+        // ----------------------------------------------------
+        // 01. BOWL PROGRESSIVE ASSEMBLY
+        // ----------------------------------------------------
+        // Broth appears (Layer 1)
+        tl.fromTo(
+          `[data-layer="1"]`,
+          { opacity: 0, scale: 0.96 },
+          { opacity: 1, scale: 1, duration: 0.8 },
+          0.4,
+        );
 
-        // editorial annotations crossfade with the build
-        STEPS.forEach((step, i) => {
-          tl.fromTo(
-            `[data-step="${step.id}"]`,
-            { opacity: 0, y: 18 },
-            { opacity: 1, y: 0, duration: 0.35 },
-            Math.max(i - 0.15, 0),
-          );
-          if (i < STEPS.length - 1) {
-            tl.to(`[data-step="${step.id}"]`, { opacity: 0, y: -14, duration: 0.3 }, i + 0.55);
-          }
-        });
+        // Noodles appear (Layer 2)
+        tl.fromTo(
+          `[data-layer="2"]`,
+          { opacity: 0, scale: 0.97 },
+          { opacity: 1, scale: 1, duration: 0.8 },
+          1.2,
+        );
 
-        // opening copy clears out, wordmark grows and settles
-        tl.to("[data-hero-open]", { opacity: 0, y: -40, duration: 0.6 }, 0.1)
-          .fromTo(
-            "[data-hero-word]",
-            { scale: 0.86, letterSpacing: "0em" },
-            { scale: 1.06, letterSpacing: "-0.05em", duration: 4 },
-            0,
-          )
-          .fromTo(
-            "[data-hero-close]",
-            { opacity: 0, y: 40 },
-            { opacity: 1, y: 0, duration: 0.6 },
-            3.3,
-          );
+        // Toppings appear (Layer 3)
+        tl.fromTo(
+          `[data-layer="3"]`,
+          { opacity: 0, scale: 0.98 },
+          { opacity: 1, scale: 1, duration: 0.8 },
+          2.0,
+        );
+
+        // Finished complete bowl (Layer 4)
+        tl.fromTo(
+          `[data-layer="4"]`,
+          { opacity: 0, scale: 0.99 },
+          { opacity: 1, scale: 1, duration: 0.8 },
+          2.8,
+        );
+
+        // ----------------------------------------------------
+        // 02. STATE 01 -> STATE 02 -> STATE 03 TYPOGRAPHY FLOW
+        // ----------------------------------------------------
+        // State 01 headline & right metadata clear out as scroll begins
+        tl.to("[data-hero-open]", { opacity: 0, y: -20, duration: 0.4 }, 0.25)
+          .to("[data-hero-right]", { opacity: 0, y: -16, duration: 0.4 }, 0.25);
+
+        // State 02: Broth annotation (Quiet editorial label)
+        tl.fromTo(
+          "[data-step-broth]",
+          { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: 0.3 },
+          0.65,
+        ).to("[data-step-broth]", { opacity: 0, y: -12, duration: 0.3 }, 1.5);
+
+        // State 02 continuation: Noodles & Toppings craft note
+        tl.fromTo(
+          "[data-step-toppings]",
+          { opacity: 0, y: 14 },
+          { opacity: 1, y: 0, duration: 0.3 },
+          1.85,
+        ).to("[data-step-toppings]", { opacity: 0, y: -12, duration: 0.3 }, 2.7);
+
+        // State 03: Final payoff reveals ONLY after bowl is complete
+        // Left brand signature
+        tl.fromTo(
+          "[data-hero-close-left]",
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, duration: 0.5 },
+          3.2,
+        );
+
+        // Right CTA cluster (away from bowl, rock-solid full opacity)
+        tl.fromTo(
+          "[data-hero-close-right]",
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, duration: 0.5 },
+          3.3,
+        );
       }, root);
     })();
 
@@ -94,19 +123,28 @@ export function HeroBuild() {
   }, []);
 
   return (
-    <div ref={root} className="relative h-[500vh] bg-cream">
+    <div ref={root} className="relative h-[420vh] bg-paper">
       <div ref={pin} className="sticky top-0 h-screen overflow-hidden">
-        {/* giant wordmark behind the bowl */}
+        {/* ==================================================
+            BACKGROUND GRAPHIC: Giant ITADAKI Wordmark
+            Sits behind the bowl as a disciplined graphic environment.
+            Visually consistent across all three states (stable opacity & scale).
+            ================================================== */}
         <div
-          data-hero-word
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 text-center"
+          className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 text-center select-none"
         >
-          <span className="wordmark block text-[27vw] text-red">ITADAKI</span>
+          <span className="wordmark block text-[25vw] text-red opacity-[0.16] tracking-tight">
+            ITADAKI
+          </span>
         </div>
 
-        {/* the bowl */}
-        <div className="absolute left-1/2 top-1/2 h-[72vmin] w-[72vmin] -translate-x-1/2 -translate-y-1/2">
+        {/* ==================================================
+            HERO OBJECT: The Ramen Bowl
+            Center 6 columns, approximately fixed central focal point.
+            The bowl interrupts/overlaps the giant ITADAKI wordmark.
+            ================================================== */}
+        <div className="absolute left-1/2 top-[56%] h-[60vmin] w-[60vmin] -translate-x-1/2 -translate-y-1/2 drop-shadow-2xl md:top-1/2 md:h-[68vmin] md:w-[68vmin] lg:h-[72vmin] lg:w-[72vmin]">
           {LAYERS.map((src, i) => (
             <img
               key={src}
@@ -114,8 +152,8 @@ export function HeroBuild() {
               src={src}
               alt={
                 i === LAYERS.length - 1
-                  ? "Finished Itadaki tori shoyu ramen bowl"
-                  : `Ramen bowl, stage ${i + 1}`
+                  ? "Finished Itadaki Tori Shoyu Ramen bowl"
+                  : `Ramen bowl stage ${i + 1}`
               }
               width={1024}
               height={1024}
@@ -126,65 +164,132 @@ export function HeroBuild() {
           ))}
         </div>
 
-        {/* opening copy */}
+        {/* ==================================================
+            STATE 01: INTRODUCTION (EMPTY BOWL)
+            Left 3 columns: Primary Headline + Supporting Copy + Scroll Cue
+            ================================================== */}
         <div
           data-hero-open
-          className="absolute left-5 top-[18vh] max-w-[13ch] md:left-8 md:top-[22vh]"
+          className="absolute left-6 top-[12vh] z-10 max-w-[85vw] md:left-12 md:top-[24vh] md:max-w-[280px] lg:left-16"
         >
-          <h1 className="display text-[13vw] text-ink md:text-[7vw]">
+          <span className="meta-label text-red">01 / 03 · SPECIFICATION</span>
+          
+          <h1 className="font-display mt-2.5 text-[11vw] uppercase leading-[0.84] tracking-[-0.03em] text-ink md:mt-3 md:text-5xl lg:text-[4.25rem]">
             It starts
             <br />
-            with a bowl.
+            with a
+            <br />
+            bowl.
           </h1>
-          <p className="mt-5 max-w-[34ch] text-sm leading-relaxed text-muted-foreground">
+
+          <p className="mt-3.5 font-sans text-xs leading-relaxed text-muted-foreground md:mt-4 md:text-sm max-w-[26ch]">
             Japanese comfort food, made for the kind of craving that doesn't need a reason.
           </p>
-          <p className="label mt-8 text-red">Scroll to build ↓</p>
+
+          <div className="mt-5 flex items-center gap-2 md:mt-7">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-red animate-pulse" />
+            <span className="meta-label text-ink/70">Scroll to build ↓</span>
+          </div>
         </div>
 
-        {/* step annotations */}
-        <div className="absolute bottom-[8vh] left-5 md:bottom-[12vh] md:left-8">
-          {STEPS.map((step) => (
-            <div
-              key={step.id}
-              data-step={step.id}
-              className="absolute bottom-0 left-0 w-[60vw] md:w-[26vw]"
-              style={{ opacity: 0 }}
-            >
-              <div className="rule-red pt-3">
-                <p className="label text-red">
-                  {step.index} / {step.name}
-                </p>
-                <p className="display mt-2 text-[7vw] text-ink md:text-[2.4vw]">{step.note}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* resolved state */}
+        {/* STATE 01: Right 3 columns metadata (Restrained museum/technical labels) */}
         <div
-          data-hero-close
-          className="absolute inset-x-5 bottom-[7vh] md:inset-x-8 md:bottom-[9vh]"
+          data-hero-right
+          className="hidden md:flex absolute right-12 top-[24vh] lg:right-16 flex-col items-end text-right space-y-6"
+        >
+          <div className="border-r-2 border-red pr-3.5">
+            <p className="meta-label text-red">VESSEL · SPEC</p>
+            <p className="mt-1 font-sans text-xs font-semibold text-ink uppercase tracking-wider">
+              Matte Black Ceramic
+            </p>
+            <p className="mt-0.5 font-sans text-[0.6875rem] text-muted-foreground">
+              Hand-thrown Japanese Vessel
+            </p>
+          </div>
+
+          <div className="pr-3.5 space-y-1 text-right">
+            <p className="meta-label text-ink">ITADAKI RAMEN SHOP</p>
+            <p className="meta-label text-muted-foreground">Bengaluru · India</p>
+            <p className="font-jp text-xs text-red font-medium tracking-widest mt-1.5">
+              いただき · 一杯の温もり
+            </p>
+          </div>
+        </div>
+
+        {/* ==================================================
+            STATE 02: THE BROTH / THE BASE (QUIETER MOMENT)
+            Restrained editorial label replacing the headline area.
+            Lets the visual transformation speak.
+            ================================================== */}
+        <div
+          data-step-broth
+          className="pointer-events-none absolute left-6 top-[28vh] z-10 max-w-xs md:left-12 md:top-[30vh] lg:left-16"
           style={{ opacity: 0 }}
         >
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="font-jp label text-red">いただき</p>
-              <p className="display mt-2 text-[11vw] text-ink md:text-[4.6vw]">
-                A hug from Japan.
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center gap-3">
-              <Link to="/menu" className="btn-red">
-                Explore the menu →
-              </Link>
-              <Link to="/" hash="find" className="btn-outline">
-                Reserve a seat
-              </Link>
-            </div>
+          <div className="border-l-2 border-red pl-4">
+            <span className="meta-label text-red">02 / 03 · THE BASE</span>
+            <p className="font-display mt-2 text-2xl uppercase tracking-tight text-ink md:text-3xl">
+              Rich. Warm. Deep.
+            </p>
+            <p className="mt-1 font-sans text-xs leading-relaxed text-muted-foreground max-w-[24ch]">
+              Slow-simmered chicken shoyu broth poured steaming hot into the vessel.
+            </p>
+          </div>
+        </div>
+
+        <div
+          data-step-toppings
+          className="pointer-events-none absolute left-6 top-[28vh] z-10 max-w-xs md:left-12 md:top-[30vh] lg:left-16"
+          style={{ opacity: 0 }}
+        >
+          <div className="border-l-2 border-red pl-4">
+            <span className="meta-label text-red">THE CRAFT · ASSEMBLY</span>
+            <p className="font-display mt-2 text-2xl uppercase tracking-tight text-ink md:text-3xl">
+              Noodles &amp; Toppings
+            </p>
+            <p className="mt-1 font-sans text-xs leading-relaxed text-muted-foreground max-w-[24ch]">
+              Springy wheat noodles, charred chicken, jammy ajitama, menma and nori.
+            </p>
+          </div>
+        </div>
+
+        {/* ==================================================
+            STATE 03: FINISHED RAMEN (THE PAYOFF)
+            Appears ONLY after the bowl is complete.
+            Left: Subtle brand title & phrase (smaller than hero headline).
+            Right: Clear, high-contrast CTAs positioned away from bowl.
+            ================================================== */}
+        <div
+          data-hero-close-left
+          className="absolute bottom-8 left-6 z-20 md:bottom-12 md:left-12 lg:left-16"
+          style={{ opacity: 0 }}
+        >
+          <span className="meta-label text-red">03 / 03 · FINISHED BOWL</span>
+          <h2 className="font-display mt-1 text-3xl uppercase tracking-tight text-ink md:text-4xl lg:text-5xl">
+            ITADAKI.
+          </h2>
+          <p className="font-jp meta-label mt-1 text-ink/75 tracking-wider">
+            A HUG FROM JAPAN.
+          </p>
+        </div>
+
+        <div
+          data-hero-close-right
+          className="absolute bottom-8 right-6 z-20 md:bottom-12 md:right-12 lg:right-16"
+          style={{ opacity: 0 }}
+        >
+          <div className="flex flex-wrap items-center gap-3">
+            <Link to="/menu" className="btn-red">
+              Explore Menu →
+            </Link>
+            <Link to="/" hash="find" className="btn-outline">
+              Reserve a Seat
+            </Link>
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+
