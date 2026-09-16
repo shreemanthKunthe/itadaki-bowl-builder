@@ -23,7 +23,7 @@ export const Route = createFileRoute("/story")({
 
 function StoryPage() {
   return (
-    <main className="bg-paper pt-28 md:pt-36">
+    <main className="bg-paper pt-16 md:pt-24">
       <div className="mx-auto max-w-7xl px-6 md:px-12">
         <Reveal>
           <p className="meta-label text-red">COMFORT, WITH ATTITUDE · OUR ORIGIN</p>

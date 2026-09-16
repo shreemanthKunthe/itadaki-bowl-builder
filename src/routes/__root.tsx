@@ -14,6 +14,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { SmoothScroll } from "@/components/SmoothScroll";
+import { Preloader } from "@/components/Preloader";
 
 
 function NotFoundComponent() {
@@ -125,6 +126,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <Preloader />
       <SmoothScroll />
       <Nav />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}

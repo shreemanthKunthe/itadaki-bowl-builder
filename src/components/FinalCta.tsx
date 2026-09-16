@@ -7,7 +7,7 @@ export function FinalCta() {
       <div className="mx-auto max-w-7xl">
         <Reveal>
           <p className="meta-label text-red">08 / THE FINALE</p>
-          <h2 className="display-1 mt-4 text-5xl text-paper md:text-8xl lg:text-[7.5rem]">
+          <h2 className="display-1 mt-4 text-[2.75rem] text-paper sm:text-5xl md:text-8xl lg:text-[7.5rem] leading-[0.88]">
             Come hungry.
             <br />
             <span className="text-red">Leave happy.</span>

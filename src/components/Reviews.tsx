@@ -13,10 +13,10 @@ export function Reviews() {
         </Reveal>
 
         {/* Poster Statement: Minimal, breathable, high impact */}
-        <div className="my-16 md:my-28">
+        <div className="my-14 md:my-24">
           <Reveal delay={80}>
             <p className="meta-label text-black/80 font-bold">OVERHEARD AT THE COUNTER</p>
-            <blockquote className="display-1 mt-6 max-w-4xl text-5xl leading-[0.84] text-white md:text-7xl lg:text-8xl">
+            <blockquote className="display-1 mt-5 max-w-4xl text-[2.5rem] leading-[0.9] text-white sm:text-4xl md:text-7xl lg:text-8xl">
               “The broth tastes like somebody actually cared.”
             </blockquote>
           </Reveal>

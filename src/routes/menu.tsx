@@ -21,7 +21,7 @@ export const Route = createFileRoute("/menu")({
 
 function MenuPage() {
   return (
-    <main className="bg-paper pt-28 md:pt-36">
+    <main className="bg-paper pt-16 md:pt-24">
       <div className="mx-auto max-w-7xl px-6 md:px-12">
         <Reveal>
           <p className="font-jp meta-label text-red">おしながき · THE COMPLETE MENU</p>

@@ -27,7 +27,7 @@ export function MenuList({ heading = "The short list." }: { heading?: string }) 
               <div className="grid grid-cols-12 gap-y-6 md:gap-x-8">
                 {/* Category Column */}
                 <div className="col-span-12 md:col-span-3">
-                  <div className="sticky top-20 flex items-center gap-3 md:block">
+                  <div className="sticky top-6 md:top-8 flex items-center gap-3 md:block">
                     <span className="meta-label text-red">{group.category}</span>
                     <p className="mt-1 hidden font-sans text-xs text-muted-foreground md:block">
                       {group.items.length} selections

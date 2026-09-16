@@ -11,14 +11,14 @@ export function FoodEditorial() {
             <span className="meta-label text-red">03 / THE SENSATION</span>
             
             <div className="mt-4 space-y-1">
-              <span className="display-1 block text-6xl text-paper md:text-8xl lg:text-[7rem]">
+              <span className="display-1 block text-[3.25rem] text-paper sm:text-6xl md:text-8xl lg:text-[7rem] leading-[0.85]">
                 HOT.
               </span>
               {/* Disruptive LOUD: offset, scaled, and in Itadaki Red */}
-              <span className="display-1 inline-block translate-x-3 text-6xl text-red md:translate-x-8 md:text-8xl lg:text-[7.4rem] tracking-normal font-bold">
+              <span className="display-1 inline-block translate-x-2 text-[3.25rem] text-red sm:translate-x-3 sm:text-6xl md:translate-x-8 md:text-8xl lg:text-[7.4rem] tracking-normal font-bold leading-[0.85]">
                 LOUD.
               </span>
-              <span className="display-1 block text-6xl text-paper md:text-8xl lg:text-[7rem]">
+              <span className="display-1 block text-[3.25rem] text-paper sm:text-6xl md:text-8xl lg:text-[7rem] leading-[0.85]">
                 COMFORTING.
               </span>
             </div>
